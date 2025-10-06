@@ -9,19 +9,38 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #d4d4d4;
+    --foreground: #000000;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-nunito), sans-serif;
+}
+/*We need these styles for each user or IA message*/
+.userMessageContainer {
+  @apply flex flex-col items-end;
+}
+
+.userMessage {
+  @apply max-w-[65vw] bg-white p-2 rounded-lg break-words whitespace-normal my-1;
+}
+
+.IAMessageContainer {
+  @apply flex flex-col items-start;
+}
+
+.IAMessage {
+  @apply max-w-[65vw] bg-[#7B169D] p-2 rounded-lg break-words whitespace-normal my-1 text-white;
 }
