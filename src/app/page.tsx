@@ -3,17 +3,15 @@ import MessageInput from "@/components/MessageInput";
 
 export default function Home() {
   return (
-    <div>
-      <main className="">
-        <div className="text-center bg-white my-8 w-[70vw] py-4 rounded-lg font-medium m-auto">
-          <h1 className="text-2xl">
-            Chat with <label className="text-[#7B169D]">AI</label>
-          </h1>
-        </div>
-        <MessageList />
-        <div className="bg-black min-h-[1px] mx-5 opacity-40"></div>
-        <MessageInput />
-      </main>
-    </div>
+    <main className="flex flex-col h-screen">
+      <div className="text-center bg-white my-8 w-[70vw] py-4 rounded-lg font-medium m-auto">
+        <h1 className="text-2xl">
+          Chat with <label className="text-[#7B169D]">AI</label>
+        </h1>
+      </div>
+      <MessageList />
+      <div className="bg-black min-h-[1px] opacity-20 mx-5"></div>
+      <MessageInput />
+    </main>
   );
 }
