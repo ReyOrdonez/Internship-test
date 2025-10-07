@@ -45,6 +45,10 @@ h6 {
   @apply max-w-[65vw] bg-[#7B169D] p-2 rounded-lg break-words whitespace-normal my-1 text-white;
 }
 
+.date {
+  @apply text-xs opacity-70;
+}
+
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }

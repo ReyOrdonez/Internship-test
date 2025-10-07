@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction, useEffect } from "react";
 import { MessageType } from "@/types";
 
 type Props = {
@@ -13,38 +13,44 @@ export default function MessageInput({ setDataMessages }: Props) {
     if (!message) {
       return;
     }
-
-    try {
-      const res = await fetch("/api/messages");
-      const data = await res.json();
-      /**
-       * Before set message state, turn each message data into more simple objects
-       */
-      const messageArray: MessageType[] = data
-        .map((msg: any) => ({
-          /**
-           *Note: some messages in the API data have inconsistent data.
-           *I assume that 'bot_sender' means the message was sent by the AI,
-           *and 'sent_by_customer' means it was sent by the user.
-           */
-          text: msg.message_text,
-          date: msg.message_date,
-          from: msg.bot_sender
-            ? "ai"
-            : msg.sent_by_customer
-            ? "user"
-            : "unknown",
-        }))
-        .sort(
-          (a: any, b: any) =>
-            new Date(a.date).getTime() - new Date(b.date).getTime()
-        );
-
-      setDataMessages(messageArray);
-    } catch (e) {
-      console.log(e);
-    }
   }
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const res = await fetch("/api/messages");
+        const data = await res.json();
+        /**
+         * Before set message state, turn each message data into more simple objects
+         */
+        const messageArray: MessageType[] = data
+          .map((msg: any) => ({
+            /**
+             * Note: some messages in the API data have inconsistent data.
+             * I assume that 'bot_sender' means the message was sent by the AI,
+             * and 'sent_by_customer' means it was sent by the user.
+             */
+            text: msg.message_text,
+            date: msg.message_date,
+            from: msg.bot_sender
+              ? "ai"
+              : msg.sent_by_customer
+              ? "user"
+              : "unknown",
+          }))
+          .sort(
+            (a: any, b: any) =>
+              new Date(a.date).getTime() - new Date(b.date).getTime()
+          );
+
+        setDataMessages(messageArray);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchMessages();
+  }, []);
 
   return (
     <div className="p-5">

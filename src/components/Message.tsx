@@ -5,11 +5,17 @@ type MessageProps = {
 };
 
 export default function Message({ text, from, date }: MessageProps) {
-  console.log({
-    text: text,
-    from: from,
-    date: date,
+  const dateToFormat = new Date(date);
+
+  const dateFormatted = dateToFormat.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
   });
+
   return (
     <div
       className={`${
@@ -20,7 +26,7 @@ export default function Message({ text, from, date }: MessageProps) {
         {text}
       </p>
 
-      <h6>{date}</h6>
+      <h6 className="date">{dateFormatted}</h6>
     </div>
   );
 }
