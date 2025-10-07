@@ -1,19 +1,26 @@
 type MessageProps = {
-  userOrNot: boolean;
+  text: string;
+  from: string;
+  date: string;
 };
 
-export default function Message({ userOrNot }: MessageProps) {
+export default function Message({ text, from, date }: MessageProps) {
+  console.log({
+    text: text,
+    from: from,
+    date: date,
+  });
   return (
     <div
       className={`${
-        userOrNot === true ? "userMessageContainer" : "IAMessageContainer"
+        from === "ai" ? "AIMessageContainer" : "userMessageContainer"
       }`}
     >
-      <p className={`${userOrNot === true ? "userMessage" : "IAMessage"}`}>
-        I am so exciting to start my internship and gain experience
+      <p className={`${from === "ai" ? " AIMessage" : "userMessage"}`}>
+        {text}
       </p>
 
-      <h6>Yesterday</h6>
+      <h6>{date}</h6>
     </div>
   );
 }

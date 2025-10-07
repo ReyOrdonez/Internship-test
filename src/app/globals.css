@@ -37,11 +37,11 @@ h6 {
   @apply max-w-[65vw] bg-white p-2 rounded-lg break-words whitespace-normal my-1;
 }
 
-.IAMessageContainer {
+.AIMessageContainer {
   @apply flex flex-col items-start;
 }
 
-.IAMessage {
+.AIMessage {
   @apply max-w-[65vw] bg-[#7B169D] p-2 rounded-lg break-words whitespace-normal my-1 text-white;
 }
 
