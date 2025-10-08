@@ -3,9 +3,10 @@ import { MessageType } from "@/types";
 
 type Props = {
   setDataMessages: Dispatch<SetStateAction<MessageType[]>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function MessageInput({ setDataMessages }: Props) {
+export default function MessageInput({ setDataMessages, setLoading }: Props) {
   const [message, setMessage] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
@@ -17,6 +18,7 @@ export default function MessageInput({ setDataMessages }: Props) {
 
   useEffect(() => {
     const fetchMessages = async () => {
+      setLoading(true);
       try {
         const res = await fetch("/api/messages");
         const data = await res.json();
@@ -42,13 +44,17 @@ export default function MessageInput({ setDataMessages }: Props) {
             (a: any, b: any) =>
               new Date(a.date).getTime() - new Date(b.date).getTime()
           );
-
-        setDataMessages(messageArray);
+        /**
+         * Delay simulation
+         */
+        setTimeout(() => {
+          setLoading(false);
+          setDataMessages(messageArray);
+        }, 2000);
       } catch (e) {
         console.log(e);
       }
     };
-
     fetchMessages();
   }, []);
 

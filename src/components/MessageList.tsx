@@ -1,12 +1,14 @@
 import { useRef, useEffect, useState } from "react";
 import Message from "./Message";
+import MessageLoading from "./MessageLoading";
 import { MessageType } from "@/types";
 
 type Props = {
   dataMessages: MessageType[];
+  loading: boolean;
 };
 
-export default function MessageList({ dataMessages }: Props) {
+export default function MessageList({ dataMessages, loading }: Props) {
   const messagesRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [showButton, setShowButton] = useState(false);
@@ -32,17 +34,21 @@ export default function MessageList({ dataMessages }: Props) {
       className="flex-1 mx-5 overflow-scroll mb-3 hide-scrollbar"
       ref={containerRef}
     >
-      {dataMessages.map(
-        (mess: MessageType, key: number) =>
-          mess.from !== "unknown" && (
-            <Message
-              text={mess.text}
-              from={mess.from}
-              date={mess.date}
-              key={key}
-            />
-          )
-      )}
+      {loading === true
+        ? Array(20)
+            .fill(0)
+            .map((_) => <MessageLoading />)
+        : dataMessages.map(
+            (mess: MessageType, key: number) =>
+              mess.from !== "unknown" && (
+                <Message
+                  text={mess.text}
+                  from={mess.from}
+                  date={mess.date}
+                  key={key}
+                />
+              )
+          )}
       <div ref={messagesRef}></div>
       {showButton && (
         <button
