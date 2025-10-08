@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 type MessageProps = {
   text: string;
   from: string;
@@ -6,27 +8,24 @@ type MessageProps = {
 
 export default function Message({ text, from, date }: MessageProps) {
   const dateToFormat = new Date(date);
+  const [open, setOpen] = useState(false);
 
-  const dateFormatted = dateToFormat.toLocaleString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  });
+  useEffect(() => {
+    setOpen(true);
+  }, []);
 
   return (
     <div
       className={`${
-        from === "ai" ? "AIMessageContainer" : "userMessageContainer"
-      }`}
+        from === "ai" ? `AIMessageContainer` : `userMessageContainer`
+      }
+      opacity-0
+      ${open && "opacity-100"}
+       transition-all duration-1000 ease-in`}
     >
-      <p className={`${from === "ai" ? " AIMessage" : "userMessage"}`}>
+      <p className={` ${from === "ai" ? " AIMessage" : "userMessage"}`}>
         {text}
       </p>
-
-      <h6 className="date">{dateFormatted}</h6>
     </div>
   );
 }
