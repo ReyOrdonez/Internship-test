@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import Message from "./Message";
 import MessageLoading from "./MessageLoading";
 import { MessageType } from "@/types";
+import { groupMessagesByDate } from "@/utils/groupMessagesByDate";
 
 type Props = {
   dataMessages: MessageType[];
@@ -12,6 +13,8 @@ export default function MessageList({ dataMessages, loading }: Props) {
   const messagesRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [showButton, setShowButton] = useState(false);
+  const orderedMessages = groupMessagesByDate(dataMessages);
+  console.log(orderedMessages);
 
   useEffect(() => {
     messagesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -37,18 +40,20 @@ export default function MessageList({ dataMessages, loading }: Props) {
       {loading === true
         ? Array(20)
             .fill(0)
-            .map((_) => <MessageLoading />)
-        : dataMessages.map(
-            (mess: MessageType, key: number) =>
-              mess.from !== "unknown" && (
+            .map((_, i) => <MessageLoading key={i} />)
+        : Object.entries(orderedMessages).map(([date, messages]) => (
+            <div key={date} className="date-group">
+              <p className="text-center my-3 opacity-65">{date}</p>
+              {messages.map((msg, index) => (
                 <Message
-                  text={mess.text}
-                  from={mess.from}
-                  date={mess.date}
-                  key={key}
+                  text={msg.text}
+                  from={msg.from}
+                  date={msg.date}
+                  key={index}
                 />
-              )
-          )}
+              ))}
+            </div>
+          ))}
       <div ref={messagesRef}></div>
       {showButton && (
         <button
