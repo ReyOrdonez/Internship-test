@@ -77,6 +77,8 @@ export default function MessageInput({ setDataMessages, setLoading }: Props) {
           className="rounded-md w-full p-4 focus:outline-none focus:border-none"
           onChange={(e) => setMessage(e.target.value)}
           value={message}
+          autoComplete="off"
+          required
         />
       </form>
     </div>
