@@ -14,6 +14,13 @@ export default function MessageInput({ setDataMessages, setLoading }: Props) {
     if (!message) {
       return;
     }
+    const newMessage: MessageType = {
+      text: message,
+      date: new Date().toISOString(),
+      from: "user",
+    };
+    setDataMessages((prev: MessageType[]) => [...prev, newMessage]);
+    setMessage("");
   }
 
   useEffect(() => {
