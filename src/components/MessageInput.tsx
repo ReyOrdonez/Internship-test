@@ -20,6 +20,27 @@ export default function MessageInput({ setDataMessages, setLoading }: Props) {
       from: "user",
     };
     setDataMessages((prev: MessageType[]) => [...prev, newMessage]);
+    //JUST TESTING nextjs API
+
+    async function testApi() {
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message }),
+        });
+        const data = await res.json();
+        const newMessage: MessageType = {
+          text: data.reply,
+          date: new Date().toDateString(),
+          from: "ai",
+        };
+        setDataMessages((prev: MessageType[]) => [...prev, newMessage]);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    testApi();
     setMessage("");
   }
 
@@ -59,7 +80,7 @@ export default function MessageInput({ setDataMessages, setLoading }: Props) {
           setDataMessages(messageArray);
         }, 2000);
       } catch (e) {
-        console.log(e);
+        const error = e;
       }
     };
     fetchMessages();

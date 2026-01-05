@@ -14,7 +14,6 @@ export default function MessageList({ dataMessages, loading }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [showButton, setShowButton] = useState(false);
   const orderedMessages = groupMessagesByDate(dataMessages);
-  console.log(orderedMessages);
 
   useEffect(() => {
     messagesRef.current?.scrollIntoView({ behavior: "smooth" });
