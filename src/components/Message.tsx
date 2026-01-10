@@ -19,7 +19,7 @@ export default function Message({ text, from }: MessageProps) {
       }
       opacity-0
       ${open && "opacity-100"}
-       transition-all duration-1000 ease-in`}
+       transition-all duration-200 ease-in`}
     >
       <p className={` ${from === "ai" ? " AIMessage" : "userMessage"}`}>
         {text}

@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import Message from "./Message";
-import MessageLoading from "./MessageLoading";
+import SendingMessage from "./sendingMesssage";
 import { MessageType } from "@/types";
 import { groupMessagesByDate } from "@/utils/groupMessagesByDate";
 
@@ -13,7 +13,6 @@ export default function MessageList({ dataMessages, loading }: Props) {
   const messagesRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [showButton, setShowButton] = useState(false);
-  const orderedMessages = groupMessagesByDate(dataMessages);
 
   useEffect(() => {
     messagesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -36,10 +35,15 @@ export default function MessageList({ dataMessages, loading }: Props) {
       className="flex-1 mx-5 overflow-scroll mb-3 hide-scrollbar"
       ref={containerRef}
     >
+      {dataMessages && (
+        <h2 className="w-64 mx-auto text-center text-xl mt-[30dvh] opacity-40">
+          Type your first message…
+        </h2>
+      )}
       {dataMessages.map((msg: MessageType) => (
         <Message text={msg.text} from={msg.from} />
       ))}
-      {loading && <p>ESCRIBIENDO</p>}
+      {loading && <SendingMessage />}
       <div ref={messagesRef}></div>
       {showButton && (
         <button

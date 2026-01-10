@@ -1,3 +1,4 @@
+import { transform } from "next/dist/build/swc";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -13,9 +14,16 @@ const config: Config = {
           "0%, 100%": { opacity: "0.3" },
           "50%": { opacity: "0.1" },
         },
+        jump: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
       },
       animation: {
         blink: "blink 1s infinite",
+        jump: "jump 900ms infinite",
+        jump2: "jump 900ms infinite 100ms",
+        jump3: "jump 900ms infinite 200ms",
       },
       colors: {
         background: "var(--background)",
