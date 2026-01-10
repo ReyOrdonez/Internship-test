@@ -35,7 +35,7 @@ export default function MessageList({ dataMessages, loading }: Props) {
       className="flex-1 mx-5 overflow-scroll mb-3 hide-scrollbar"
       ref={containerRef}
     >
-      {dataMessages && (
+      {dataMessages.length < 1 && (
         <h2 className="w-64 mx-auto text-center text-xl mt-[30dvh] opacity-40">
           Type your first message…
         </h2>
