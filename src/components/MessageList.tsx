@@ -24,7 +24,7 @@ export default function MessageList({ dataMessages, loading }: Props) {
     const handleScroll = () => {
       const distanceFromBottom =
         container.scrollHeight - container.scrollTop - container.clientHeight;
-      setShowButton(distanceFromBottom > 100);
+      setShowButton(distanceFromBottom > 200);
     };
 
     container.addEventListener("scroll", handleScroll);
@@ -36,23 +36,10 @@ export default function MessageList({ dataMessages, loading }: Props) {
       className="flex-1 mx-5 overflow-scroll mb-3 hide-scrollbar"
       ref={containerRef}
     >
-      {loading === true
-        ? Array(20)
-            .fill(0)
-            .map((_, i) => <MessageLoading key={i} />)
-        : Object.entries(orderedMessages).map(([date, messages]) => (
-            <div key={date} className="date-group">
-              <p className="text-center my-3 opacity-65">{date}</p>
-              {messages.map((msg, index) => (
-                <Message
-                  text={msg.text}
-                  from={msg.from}
-                  date={msg.date}
-                  key={index}
-                />
-              ))}
-            </div>
-          ))}
+      {dataMessages.map((msg: MessageType) => (
+        <Message text={msg.text} from={msg.from} />
+      ))}
+      {loading && <p>ESCRIBIENDO</p>}
       <div ref={messagesRef}></div>
       {showButton && (
         <button

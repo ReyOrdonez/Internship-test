@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 type MessageProps = {
   text: string;
   from: string;
-  date: string;
 };
 
-export default function Message({ text, from, date }: MessageProps) {
-  const dateToFormat = new Date(date);
+export default function Message({ text, from }: MessageProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -16,7 +14,7 @@ export default function Message({ text, from, date }: MessageProps) {
 
   return (
     <div
-      className={`${
+      className={`my-3 ${
         from === "ai" ? `AIMessageContainer` : `userMessageContainer`
       }
       opacity-0

@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, useEffect } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { MessageType } from "@/types";
 
 type Props = {
@@ -22,7 +22,8 @@ export default function MessageInput({ setDataMessages, setLoading }: Props) {
     setDataMessages((prev: MessageType[]) => [...prev, newMessage]);
     //JUST TESTING nextjs API
 
-    async function testApi() {
+    async function fetchMessage() {
+      setLoading(true);
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
@@ -30,6 +31,7 @@ export default function MessageInput({ setDataMessages, setLoading }: Props) {
           body: JSON.stringify({ message }),
         });
         const data = await res.json();
+        data && setLoading(false);
         const newMessage: MessageType = {
           text: data.reply,
           date: new Date().toDateString(),
@@ -40,51 +42,9 @@ export default function MessageInput({ setDataMessages, setLoading }: Props) {
         console.log(e);
       }
     }
-    testApi();
+    fetchMessage();
     setMessage("");
   }
-
-  useEffect(() => {
-    const fetchMessages = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch("/api/messages");
-        const data = await res.json();
-        /**
-         * Before set message state, turn each message data into more simple objects
-         */
-        const messageArray: MessageType[] = data
-          .map((msg: any) => ({
-            /**
-             * Note: some messages in the API data have inconsistent data.
-             * I assume that 'bot_sender' means the message was sent by the AI,
-             * and 'sent_by_customer' means it was sent by the user.
-             */
-            text: msg.message_text,
-            date: msg.message_date,
-            from: msg.bot_sender
-              ? "ai"
-              : msg.sent_by_customer
-              ? "user"
-              : "unknown",
-          }))
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.date).getTime() - new Date(b.date).getTime()
-          );
-        /**
-         * Delay simulation
-         */
-        setTimeout(() => {
-          setLoading(false);
-          setDataMessages(messageArray);
-        }, 2000);
-      } catch (e) {
-        const error = e;
-      }
-    };
-    fetchMessages();
-  }, []);
 
   return (
     <div className="p-5">

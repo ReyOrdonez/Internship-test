@@ -13,7 +13,6 @@ export async function POST(req: Request) {
       reply: response.output_text,
     });
   } catch (e: any) {
-    console.log(e);
     return Response.json(
       { error: e.message ?? "Error interno" },
       { status: 500 }
