@@ -15,8 +15,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Internship Test",
-  description: "Chat with IA",
+  title: "Chat with AI",
+  description: "chat-gpt api",
 };
 
 export default function RootLayout({
