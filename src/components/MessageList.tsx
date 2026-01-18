@@ -2,7 +2,6 @@ import { useRef, useEffect, useState } from "react";
 import Message from "./Message";
 import SendingMessage from "./sendingMesssage";
 import { MessageType } from "@/types";
-import { groupMessagesByDate } from "@/utils/groupMessagesByDate";
 
 type Props = {
   dataMessages: MessageType[];

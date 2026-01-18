@@ -15,7 +15,9 @@ export default function Message({ text, from }: MessageProps) {
   return (
     <div
       className={`my-3 ${
-        from === "ai" ? `AIMessageContainer` : `userMessageContainer`
+        from === "ai"
+          ? `AIMessageContainer lg:ml-40`
+          : `userMessageContainer lg:mr-40`
       }
       opacity-0
       ${open && "opacity-100"}
