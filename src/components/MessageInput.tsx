@@ -4,10 +4,15 @@ import { MessageType } from "@/types";
 type Props = {
   setDataMessages: Dispatch<SetStateAction<MessageType[]>>;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  setError: Dispatch<SetStateAction<string | null>>;
 };
 
-export default function MessageInput({ setDataMessages, setLoading }: Props) {
-  const [message, setMessage] = useState("");
+export default function MessageInput({
+  setDataMessages,
+  setLoading,
+  setError,
+}: Props) {
+  const [message, setMessage] = useState<string>("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -24,6 +29,7 @@ export default function MessageInput({ setDataMessages, setLoading }: Props) {
 
     async function fetchMessage() {
       setLoading(true);
+      setError(null);
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
@@ -39,7 +45,9 @@ export default function MessageInput({ setDataMessages, setLoading }: Props) {
         };
         setDataMessages((prev: MessageType[]) => [...prev, newMessage]);
       } catch (e) {
-        console.log(e);
+        setError("Something went wrong. Please try again");
+      } finally {
+        setLoading(false);
       }
     }
     fetchMessage();

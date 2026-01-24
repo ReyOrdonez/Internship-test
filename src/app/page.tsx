@@ -7,7 +7,8 @@ import { MessageType } from "@/types";
 
 export default function Home() {
   const [dataMessages, setDataMessages] = useState<MessageType[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <main className="flex flex-col h-screen">
@@ -16,9 +17,17 @@ export default function Home() {
           Chat with <label className="text-[#7B169D]">AI</label>
         </h1>
       </div>
-      <MessageList dataMessages={dataMessages} loading={loading} />
+      <MessageList
+        dataMessages={dataMessages}
+        loading={loading}
+        error={error}
+      />
       <div className="bg-black min-h-[1px] opacity-20 mx-5"></div>
-      <MessageInput setDataMessages={setDataMessages} setLoading={setLoading} />
+      <MessageInput
+        setDataMessages={setDataMessages}
+        setLoading={setLoading}
+        setError={setError}
+      />
     </main>
   );
 }

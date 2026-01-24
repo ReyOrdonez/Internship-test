@@ -6,9 +6,10 @@ import { MessageType } from "@/types";
 type Props = {
   dataMessages: MessageType[];
   loading: boolean;
+  error: string | null;
 };
 
-export default function MessageList({ dataMessages, loading }: Props) {
+export default function MessageList({ dataMessages, loading, error }: Props) {
   const messagesRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [showButton, setShowButton] = useState(false);
@@ -43,6 +44,11 @@ export default function MessageList({ dataMessages, loading }: Props) {
         <Message text={msg.text} from={msg.from} />
       ))}
       {loading && <SendingMessage />}
+      {error && (
+        <div className="text-center mt-32">
+          <h3 className="text-red-800">{error}</h3>
+        </div>
+      )}
       <div ref={messagesRef}></div>
       {showButton && (
         <button
